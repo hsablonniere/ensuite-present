@@ -10,6 +10,32 @@
   padding: 0.5em 1em;
 }
 
+.notes-block p,
+.notes-block ul {
+  margin: 0;
+}
+
+.notes-block p {
+  white-space: pre-wrap;
+}
+
+.notes-block mark {
+  background-color: #000;
+  border-radius: 0.2em;
+  color: #fff;
+  display: inline-block;
+  font-style: italic;
+  padding: 0 0.5em;
+}
+
+.notes-block .state {
+  background-color: #7f7f06;
+  border-radius: 0.2em;
+  color: #fff;
+  display: inline-block;
+  padding: 0 0.5em;
+}
+
 .notes-block.current-block {
   background-color: #ff9;
 }
@@ -24,7 +50,7 @@
   text-indent: -2ch;
 }
 
-.notes-line:empty::after {
+.notes-block:empty::after {
   content: '~'; /* VIM style! */
   font-style: italic;
   color: #a9a9a9;

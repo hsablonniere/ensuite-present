@@ -7,6 +7,7 @@
   // open a slide deck
   // default : slide-deck-url=about:blank
   const slideDeckUrl = params.get('slide-deck-url') || 'about:blank'
+  const initCursor = params.get('init-cursor') || null
 
   // connect to a named event bus
   // this allows to have several groups of slide decks that are not synced together
@@ -16,7 +17,7 @@
   // setup keyboard shortcuts
 
   const componentsChannel = new BroadcastChannel(`COMPONENTS_CHANNEL(${bus})`)
-  componentsChannel.postMessage({ command:'load-slide-deck', commandArgs: { url: slideDeckUrl } })
+  componentsChannel.postMessage({ command: 'load-slide-deck', commandArgs: { url: slideDeckUrl, initCursor } })
 
   componentsChannel.addEventListener('message', ({ data: { command, commandArgs } }) => {
 

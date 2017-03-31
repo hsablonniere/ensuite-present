@@ -43,7 +43,7 @@
 
       let block = e.target
 
-      if (block.dataset.slideIdx == null) {
+      while (block != window.document && block.dataset.slideIdx == null) {
         block = block.parentElement
       }
 
@@ -127,14 +127,9 @@
       return steps
         .map(({ cursor, notes }) => {
 
-          const lines = notes
-            .split('\n')
-            .map((line) => line.trim())
-            .filter((line, i, allLines) => {
-              return (line !== '') || (allLines.length === 1)
-            })
-            .map((line) => `<div class="notes-line">${line}</div>`)
-            .join('')
+          const lines = notes.trim()
+            // .map((line) => `<div class="notes-line">${line}</div>`)
+            // .join('')
 
           return `<div class="notes-block" data-slide-idx="${cursor}">${lines}</div>`
         })

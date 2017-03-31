@@ -161,6 +161,11 @@
 
       lastKnownState.cursor = newStep.cursor
 
+      initCursor = newStep.cursor
+      const url = new URL(location.href)
+      url.searchParams.set('init-cursor', newStep.cursor)
+      window.history.replaceState({}, '', url.toString())
+
       const shiftedStepIndex = newStepIndex + shift
       const shiftedStep = flattenSteps[shiftedStepIndex]
       const isOutOfBounds = (shiftedStepIndex < 0) || (shiftedStepIndex >= flattenSteps.length)
