@@ -45,5 +45,29 @@
       command: 'toggle-slide-deck-state',
       commandArgs: { state: 'one', enabled: false },
     },
+    'down(KeyH)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'two', enabled: true },
+    },
+    'up(KeyH)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'two', enabled: false },
+    },
+    'down(KeyJ)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'three', enabled: true },
+    },
+    'up(KeyJ)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'three', enabled: false },
+    },
+    'down(KeyG)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'four', enabled: true },
+    },
+    'up(KeyG)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'four', enabled: false },
+    },
   }
 })()

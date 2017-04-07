@@ -35,7 +35,7 @@ const io = socketIo(server)
 io.on('connection', function (client) {
   console.log('connection'/*, client*/)
   client.on('command', function (data) {
-    console.log('command', data)
+//    console.log('command', data)
     client.broadcast.emit('command', data)
   })
   client.on('disconnect', function (client) {
@@ -66,21 +66,21 @@ function keyHandler(e) {
 
   if (e.type === 'keypress' && e.keyId === 'KEY_LEFTCTRL') {
     ctrlDown = true
-    console.log('CTRL_DOWN')
+ //   console.log('CTRL_DOWN')
   }
 
   if (e.type === 'keyup' && e.keyId === 'KEY_LEFTCTRL') {
     ctrlDown = false
-    console.log('CTRL_UP')
+//    console.log('CTRL_UP')
   }
 
   if (e.type === 'keypress' && ctrlDown) {
     if (e.keyId === 'KEY_F7') {
-      console.log('go-to-previous-step')
+//      console.log('go-to-previous-step')
       io.sockets.emit('command', { command: 'go-to-previous-step', commandArgs: {} })
     }
     if (e.keyId === 'KEY_F8') {
-      console.log('go-to-next-step')
+//      console.log('go-to-next-step')
       io.sockets.emit('command', { command: 'go-to-next-step', commandArgs: {} })
     }
   }

@@ -76,6 +76,7 @@
 
         case 'load-slide-deck':
           initCursor = commandArgs.initCursor
+          console.log('NOTES load-slide-deck', initCursor)
           break
 
         case 'go-to-step':
@@ -151,6 +152,7 @@
 
       lastKnownState.cursor = newStep.cursor
 
+      initCursor = newStep.cursor
       const oldBlock = wrapper.querySelector('.current-block')
       if (oldBlock != null) {
         oldBlock.classList.remove('current-block')
