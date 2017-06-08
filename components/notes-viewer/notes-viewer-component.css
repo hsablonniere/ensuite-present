@@ -26,14 +26,37 @@
   display: inline-block;
   font-style: italic;
   padding: 0 0.5em;
+  margin: 0.3rem 0;
 }
 
-.notes-block .state {
-  background-color: #7f7f06;
-  border-radius: 0.2em;
+.notes-block .one:before,
+.notes-block .two:before,
+.notes-block .three:before,
+.notes-block .four:before {
+  border-radius: 50%;
   color: #fff;
   display: inline-block;
+  font-weight: bold;
+  margin: 0.3rem 1rem 0.3rem 0;
   padding: 0 0.5em;
+}
+
+.notes-block .one:before {
+  background-color: #007243;
+  content: 'Y';
+}
+.notes-block .two:before {
+  background-color: #00387b;
+  content: 'X';
+}
+.notes-block .three:before {
+  background-color: #F7BA0B;
+  color: #000;
+  content: 'B';
+}
+.notes-block .four:before {
+  background-color: #C1121C;
+  content: 'A';
 }
 
 .notes-block.current-block {
