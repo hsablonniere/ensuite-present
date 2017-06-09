@@ -10,7 +10,19 @@
   gamepad.setCustomMapping('gamepad', {
     'start': 7,
     'select': 6,
+    'shoulder_top_left': 4,
+    'shoulder_top_right': 5,
+    'd_pad_up': 12,
+    'd_pad_down': 13,
+    'd_pad_left': 14,
+    'd_pad_right': 15,
+    'button_1': 0,
+    'button_2': 1,
+    'button_3': 2,
+    'button_4': 3,
   })
+
+  gamepad.setCustomMapping('keyboard', {})
 
   gamepad.on('press', 'shoulder_top_left', () => {
     componentsChannel.postMessage({
