@@ -12,10 +12,12 @@
     'select': 6,
     'shoulder_top_left': 4,
     'shoulder_top_right': 5,
-    'd_pad_up': 12,
-    'd_pad_down': 13,
-    'd_pad_left': 14,
-    'd_pad_right': 15,
+    // 'd_pad_up': 12,
+    // 'd_pad_down': 13,
+    // 'd_pad_left': 14,
+    // 'd_pad_right': 15,
+    // 'stick_axis_left': [0, 2],
+    // 'stick_axis_right': [2, 4],
     'button_1': 0,
     'button_2': 1,
     'button_3': 2,
@@ -38,32 +40,38 @@
     })
   })
 
-  gamepad.on('press', 'd_pad_left', () => {
-    componentsChannel.postMessage({
-      command: 'go-to-previous-step',
-      commandArgs: { secret: true },
-    })
+  gamepad.on('press', 'stick_axis_left', (e) => {
+
+    if (e.value[0] === -1) {
+      componentsChannel.postMessage({
+        command: 'go-to-previous-step',
+        commandArgs: { secret: true },
+      })
+    }
+
+    if (e.value[0] === 1) {
+      componentsChannel.postMessage({
+        command: 'go-to-next-step',
+        commandArgs: { secret: true },
+      })
+    }
   })
 
-  gamepad.on('press', 'd_pad_right', () => {
-    componentsChannel.postMessage({
-      command: 'go-to-next-step',
-      commandArgs: { secret: true },
-    })
-  })
+  gamepad.on('hold', 'stick_axis_left', (e) => {
 
-  gamepad.on('press', 'd_pad_up', () => {
-    componentsChannel.postMessage({
-      command: 'move-notes',
-      commandArgs: { amount: -90 },
-    })
-  })
+    if (e.value[1] === -1) {
+      componentsChannel.postMessage({
+        command: 'move-notes',
+        commandArgs: { amount: -90 },
+      })
+    }
 
-  gamepad.on('press', 'd_pad_down', () => {
-    componentsChannel.postMessage({
-      command: 'move-notes',
-      commandArgs: { amount: 90 },
-    })
+    if (e.value[1] === 1) {
+      componentsChannel.postMessage({
+        command: 'move-notes',
+        commandArgs: { amount: 90 },
+      })
+    }
   })
 
   gamepad.on('hold', 'button_3', () => {
