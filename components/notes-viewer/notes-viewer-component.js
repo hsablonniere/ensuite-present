@@ -61,7 +61,7 @@
           flattenSteps = flatten(details.steps)
           notesBody.innerHTML = transformNotesToHtml(flattenSteps)
           goToStep({ cursor: (initCursor || (flattenSteps[0].cursor)) })
-          break;
+          break
 
         default:
           if (event != null) {
@@ -129,8 +129,8 @@
         .map(({ cursor, notes }) => {
 
           const lines = notes.trim()
-            // .map((line) => `<div class="notes-line">${line}</div>`)
-            // .join('')
+          // .map((line) => `<div class="notes-line">${line}</div>`)
+          // .join('')
 
           return `<div class="notes-block" data-slide-idx="${cursor}">${lines}</div>`
         })
@@ -159,7 +159,11 @@
       }
 
       const currentBlock = wrapper.querySelector(`.notes-block[data-slide-idx="${newStep.cursor}"]`)
-      currentBlock.scrollIntoView({ behavior: 'smooth' })
+      currentBlock.scrollIntoView({
+        // behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      })
       currentBlock.classList.add('current-block')
     }
   })

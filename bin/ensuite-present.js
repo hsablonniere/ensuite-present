@@ -50,38 +50,38 @@ console.log(`ensuite-present console available at http://localhost:${PORT}/pages
 
 // keylogger stuffs
 
-const Keyboard = require('node-keylogger')
-
-const k = new Keyboard('event3')
-// 'event0' is the file corresponding to my keyboard in /dev/input/
-
-k.on('keyup', keyHandler)
-// k.on('keydown', keyHandler)
-k.on('keypress', keyHandler)
-k.on('error', console.error)
-
-let ctrlDown = false
-
-function keyHandler(e) {
-
-  if (e.type === 'keypress' && e.keyId === 'KEY_LEFTCTRL') {
-    ctrlDown = true
- //   console.log('CTRL_DOWN')
-  }
-
-  if (e.type === 'keyup' && e.keyId === 'KEY_LEFTCTRL') {
-    ctrlDown = false
-//    console.log('CTRL_UP')
-  }
-
-  if (e.type === 'keypress' && ctrlDown) {
-    if (e.keyId === 'KEY_F7') {
-//      console.log('go-to-previous-step')
-      io.sockets.emit('command', { command: 'go-to-previous-step', commandArgs: {} })
-    }
-    if (e.keyId === 'KEY_F8') {
-//      console.log('go-to-next-step')
-      io.sockets.emit('command', { command: 'go-to-next-step', commandArgs: {} })
-    }
-  }
-}
+// const Keyboard = require('node-keylogger')
+//
+// const k = new Keyboard('event3')
+// // 'event0' is the file corresponding to my keyboard in /dev/input/
+//
+// k.on('keyup', keyHandler)
+// // k.on('keydown', keyHandler)
+// k.on('keypress', keyHandler)
+// k.on('error', console.error)
+//
+// let ctrlDown = false
+//
+// function keyHandler(e) {
+//
+//   if (e.type === 'keypress' && e.keyId === 'KEY_LEFTCTRL') {
+//     ctrlDown = true
+//  //   console.log('CTRL_DOWN')
+//   }
+//
+//   if (e.type === 'keyup' && e.keyId === 'KEY_LEFTCTRL') {
+//     ctrlDown = false
+// //    console.log('CTRL_UP')
+//   }
+//
+//   if (e.type === 'keypress' && ctrlDown) {
+//     if (e.keyId === 'KEY_F7') {
+// //      console.log('go-to-previous-step')
+//       io.sockets.emit('command', { command: 'go-to-previous-step', commandArgs: {} })
+//     }
+//     if (e.keyId === 'KEY_F8') {
+// //      console.log('go-to-next-step')
+//       io.sockets.emit('command', { command: 'go-to-next-step', commandArgs: {} })
+//     }
+//   }
+// }

@@ -5,7 +5,11 @@ body {
 }
 
 body {
+  background-color: #000;
+  box-sizing: border-box;
   margin: 0;
+  /*padding: 15px;*/
+  cursor: none;
 }
 
 .multi {
