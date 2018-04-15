@@ -1,59 +1,59 @@
 (function () {
 
-  'use strict'
+  'use strict';
 
-  function flatten(array) {
-    const newArray = []
+  function flatten (array) {
+    const newArray = [];
     array.forEach((itemOrItems) => {
       if (Array.isArray(itemOrItems)) {
-        newArray.push(...itemOrItems)
+        newArray.push(...itemOrItems);
       }
       else {
-        newArray.push(itemOrItems)
+        newArray.push(itemOrItems);
       }
-    })
-    return newArray
+    });
+    return newArray;
   }
 
-  function qsa(selector) {
-    return Array.from(document.querySelectorAll(selector))
+  function qsa (selector) {
+    return Array.from(document.querySelectorAll(selector));
   }
 
   qsa('.slideViewer-wrapper').forEach((wrapper) => {
 
-    const viewer = wrapper.querySelector('.slideViewer')
+    const viewer = wrapper.querySelector('.slideViewer');
 
     // display the slide deck in advance or with delay
     // data-shift=1 will display the very next step
     // default : 0
-    const shift = Number(wrapper.dataset.shift) || 0
+    const shift = Number(wrapper.dataset.shift) || 0;
 
     // connect to a named event bus
     // this allows to have several groups of slide decks that are not synced together
     // default : bus=default
-    const bus = wrapper.dataset.bus || 'default'
+    const bus = wrapper.dataset.bus || 'default';
 
     // apply "viewerIsPublic" goTo() only if viewerIsPublic is enabled
     // this allows a speaker to move slides on his screen and not on the projector
     // default : secret=false
-    const viewerIsSecret = ((wrapper.dataset.secret === 'true') ? true : false)
+    const viewerIsSecret = ((wrapper.dataset.secret === 'true') ? true : false);
 
     // ADD a prefix in the name
-    const componentsChannel = new BroadcastChannel(`COMPONENTS_CHANNEL(${bus})`)
+    const componentsChannel = new BroadcastChannel(`COMPONENTS_CHANNEL(${bus})`);
 
-    const componentId = (Math.random() * 1e30).toString(36)
-    let details
-    let flattenSteps
-    let initCursor
+    const componentId = (Math.random() * 1e30).toString(36);
+    let details;
+    let flattenSteps;
+    let initCursor;
 
     // Last know state from component
-    const lastKnownState = {}
+    const lastKnownState = {};
 
     // Display slides once they're loaded and ask for details
     viewer.addEventListener('load', () => {
-      wrapper.classList.add('slideViewer-wrapper--loaded')
-      sendCommandToIframe('get-slide-deck-details')
-    })
+      wrapper.classList.add('slideViewer-wrapper--loaded');
+      sendCommandToIframe('get-slide-deck-details');
+    });
 
     // Events from slide deck
     window.addEventListener('message', ({ source, data: { event, eventData } }) => {
@@ -61,18 +61,25 @@
       switch (event) {
 
         case 'slide-deck-details':
-          details = eventData.details
-          flattenSteps = flatten(details.steps)
-          goToStep({ cursor: (initCursor || (flattenSteps[0].cursor)) })
-          componentsChannel.postMessage({ event, eventData })
-          break
+          details = eventData.details;
+          flattenSteps = flatten(details.steps);
+          goToStep({ cursor: (initCursor || (flattenSteps[0].cursor)) });
+          componentsChannel.postMessage({ event, eventData });
+          break;
+
+        case 'set-viewport':
+          console.log('set-viewport', eventData);
+          if (!viewerIsSecret) {
+            componentsChannel.postMessage({ event, eventData });
+          }
+          break;
 
         default:
           if (event != null) {
-            console.debug('unknown protocol event', event, 'with data', eventData)
+            console.debug('unknown protocol event', event, 'with data', eventData);
           }
       }
-    })
+    });
 
     componentsChannel.addEventListener('message', ({ data: { command, commandArgs } }) => {
 
@@ -80,40 +87,44 @@
 
         case 'load-slide-deck':
 
-          if (lastKnownState.url != null && lastKnownState.url === commandArgs.url) {
-            break
-          }
+          // if (lastKnownState.url != null && lastKnownState.url === commandArgs.url) {
+          //   break;
+          // }
 
-          wrapper.classList.remove('slideViewer-wrapper--loaded')
-          initCursor = commandArgs.initCursor
-          lastKnownState.url = commandArgs.url
-          viewer.src = commandArgs.url
-          break
+          viewer.src = 'about:blank';
+          wrapper.classList.add('slideViewer-wrapper--loaded');
+          setTimeout(() => {
+            wrapper.classList.remove('slideViewer-wrapper--loaded');
+            initCursor = commandArgs.initCursor;
+            lastKnownState.url = commandArgs.url;
+            viewer.src = commandArgs.url;
+          }, 500);
+          break;
 
         case 'go-to-step':
-          goToStep(commandArgs)
-          break
+          goToStep(commandArgs);
+          break;
 
         case 'go-to-first-step':
-          goToStep({ cursor: flattenSteps[0].cursor, secret: commandArgs.secret })
-          break
+          goToStep({ cursor: flattenSteps[0].cursor, secret: commandArgs.secret });
+          break;
 
         case 'go-to-previous-step':
-          goToStep({ cursor: lastKnownState.cursor, secret: commandArgs.secret, move: -1 })
-          break
+          goToStep({ cursor: lastKnownState.cursor, secret: commandArgs.secret, move: -1 });
+          break;
 
         case 'go-to-next-step':
-          goToStep({ cursor: lastKnownState.cursor, secret: commandArgs.secret, move: 1 })
-          break
+          goToStep({ cursor: lastKnownState.cursor, secret: commandArgs.secret, move: 1 });
+          break;
 
         case 'go-to-last-step':
-          goToStep({ cursor: flattenSteps[flattenSteps.length - 1].cursor, secret: commandArgs.secret })
-          break
+          goToStep({ cursor: flattenSteps[flattenSteps.length - 1].cursor, secret: commandArgs.secret });
+          break;
 
         case 'toggle-slide-deck-state':
-          const { state, enabled } = commandArgs
-          sendCommandToIframe('toggle-slide-deck-state', { state, enabled })
-          break
+          const { state, enabled } = commandArgs;
+          sendCommandToIframe('toggle-slide-deck-state', { state, enabled });
+          break;
 
         // case 'get-current-state':
         //   if (lastKnownState.url != null && lastKnownState.cursor != null) {
@@ -135,54 +146,54 @@
 
         default:
           if (command != null) {
-            console.debug('unknown protocol command', command, 'with args', commandArgs)
+            console.debug('unknown protocol command', command, 'with args', commandArgs);
           }
       }
-    })
+    });
 
     // componentsChannel.postMessage({ command: 'get-current-state', commandArgs: { fromComponentId: componentId } })
 
-    function sendCommandToIframe(command, commandArgs) {
-      viewer.contentWindow.postMessage({ command, commandArgs }, '*')
+    function sendCommandToIframe (command, commandArgs) {
+      viewer.contentWindow.postMessage({ command, commandArgs }, '*');
     }
 
     // "move" is to easily go to current step +1 or -5
     // shift is to...
-    function goToStep({ cursor, secret = false, move = 0 }) {
+    function goToStep ({ cursor, secret = false, move = 0 }) {
 
-      const stepIndex = flattenSteps.findIndex((step) => step.cursor === cursor)
-      const newStepIndex = stepIndex + move
-      const newStep = flattenSteps[newStepIndex]
+      const stepIndex = flattenSteps.findIndex((step) => step.cursor === cursor);
+      const newStepIndex = stepIndex + move;
+      const newStep = flattenSteps[newStepIndex];
 
       // don't send "go-to-step" if step cannot be found
       if (!newStep) {
-        return
+        return;
       }
 
-      lastKnownState.cursor = newStep.cursor
+      lastKnownState.cursor = newStep.cursor;
 
-      initCursor = newStep.cursor
-      const url = new URL(location.href)
-      url.searchParams.set('init-cursor', newStep.cursor)
-      window.history.replaceState({}, '', url.toString())
+      initCursor = newStep.cursor;
+      const url = new URL(location.href);
+      url.searchParams.set('init-cursor', newStep.cursor);
+      window.history.replaceState({}, '', url.toString());
 
-      const shiftedStepIndex = newStepIndex + shift
-      const shiftedStep = flattenSteps[shiftedStepIndex]
-      const isOutOfBounds = (shiftedStepIndex < 0) || (shiftedStepIndex >= flattenSteps.length)
+      const shiftedStepIndex = newStepIndex + shift;
+      const shiftedStep = flattenSteps[shiftedStepIndex];
+      const isOutOfBounds = (shiftedStepIndex < 0) || (shiftedStepIndex >= flattenSteps.length);
 
-      wrapper.classList.toggle('slideViewer-wrapper--overTheEnd', isOutOfBounds)
+      wrapper.classList.toggle('slideViewer-wrapper--overTheEnd', isOutOfBounds);
 
       // don't send "go-to-step" if step cannot be found
       if (!shiftedStep) {
-        return
+        return;
       }
 
       // don't send "go-to-step" if it is secret and viewer is not
       if (secret && !viewerIsSecret) {
-        return
+        return;
       }
 
-      sendCommandToIframe('go-to-step', { cursor: shiftedStep.cursor })
+      sendCommandToIframe('go-to-step', { cursor: shiftedStep.cursor });
     }
-  })
-})()
+  });
+})();

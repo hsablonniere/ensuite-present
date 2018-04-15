@@ -33,7 +33,7 @@
     const minutesDom = wrapper.querySelector('.minutes')
     const secondsDom = wrapper.querySelector('.seconds')
 
-    let totalTime = 50 * 60
+    let totalTime = 45 * 60
 
     function updateDisplay(t) {
 

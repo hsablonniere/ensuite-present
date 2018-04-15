@@ -2,7 +2,8 @@
   color: #000;
   font-family: monospace;
   line-height: 1.6;
-  overflow: auto;
+  overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
   word-break: break-word;
 }
 
@@ -77,4 +78,15 @@
   content: '~'; /* VIM style! */
   font-style: italic;
   color: #a9a9a9;
+}
+
+.notes-block .question {
+  background-color: #0082ff;
+  border-radius: 0.2em;
+  color: #fff;
+  display: inline-block;
+  font-style: italic;
+  font-weight: bold;
+  padding: 0 0.5em;
+  margin: 0.3rem 0;
 }

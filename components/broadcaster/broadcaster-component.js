@@ -6,12 +6,11 @@
 
   const componentsChannel = new BroadcastChannel(`COMPONENTS_CHANNEL(default)`)
 
-  componentsChannel.addEventListener('message', ({ data: { command, commandArgs } }) => {
-    console.log(command, commandArgs)
-    socket.emit('command', { command, commandArgs })
+  componentsChannel.addEventListener('message', ({ data: { event, eventData, command, commandArgs } }) => {
+    socket.emit('command', { event, eventData, command, commandArgs })
   })
 
-  socket.on('command', function ({ command, commandArgs }) {
-    componentsChannel.postMessage({ command, commandArgs })
+  socket.on('command', function ({ event, eventData, command, commandArgs }) {
+    componentsChannel.postMessage({ event, eventData, command, commandArgs })
   })
 })()

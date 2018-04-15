@@ -4,6 +4,11 @@
 
   const params = new URLSearchParams(window.location.search)
 
+  // open a slide deck
+  // default : slide-deck-url=about:blank
+  const slideDeckUrl = params.get('slide-deck-url') || 'about:blank'
+  const initCursor = params.get('init-cursor') || null
+
   // display a grid of slide deck
   // ex: multi=3 => grid of 9 slide decks (3 by 3)
   // default : multi=1
@@ -46,4 +51,8 @@
 
     wrapperReference.dataset.shift = 0 + shift
   }
+
+  const componentsChannel = new BroadcastChannel(`COMPONENTS_CHANNEL(${bus})`)
+  componentsChannel.postMessage({ command: 'load-slide-deck', commandArgs: { url: slideDeckUrl, initCursor } })
+  console.log(`loading ${slideDeckUrl}, ${initCursor}`)
 })()
