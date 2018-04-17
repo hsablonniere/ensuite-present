@@ -64,14 +64,14 @@
     if (e.value[1] === -1) {
       componentsChannel.postMessage({
         command: 'move-notes',
-        commandArgs: { amount: -90 },
+        commandArgs: { amount: -10 },
       })
     }
 
     if (e.value[1] === 1) {
       componentsChannel.postMessage({
         command: 'move-notes',
-        commandArgs: { amount: 90 },
+        commandArgs: { amount: 10 },
       })
     }
   })

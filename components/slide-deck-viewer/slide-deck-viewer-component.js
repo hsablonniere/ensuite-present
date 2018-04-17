@@ -161,6 +161,10 @@
     // shift is to...
     function goToStep ({ cursor, secret = false, move = 0 }) {
 
+      if (flattenSteps == null) {
+        return
+      }
+
       const stepIndex = flattenSteps.findIndex((step) => step.cursor === cursor);
       const newStepIndex = stepIndex + move;
       const newStep = flattenSteps[newStepIndex];

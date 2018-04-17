@@ -73,5 +73,37 @@
       command: 'set-slide-deck-ratio',
       commandArgs: { ratio: '16/9' },
     },
+    'down(KeyY)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'one', enabled: true },
+    },
+    'up(KeyY)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'one', enabled: false },
+    },
+    'down(KeyX)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'two', enabled: true },
+    },
+    'up(KeyX)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'two', enabled: false },
+    },
+    'down(KeyB)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'three', enabled: true },
+    },
+    'up(KeyB)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'three', enabled: false },
+    },
+    'down(KeyQ)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'four', enabled: true },
+    },
+    'up(KeyQ)': {
+      command: 'toggle-slide-deck-state',
+      commandArgs: { state: 'four', enabled: false },
+    },
   }
 })()

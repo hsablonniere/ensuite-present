@@ -42,19 +42,42 @@
   padding: 0 0.5em;
 }
 
+.notes-block .one {
+  color: #007243;
+  font-weight: bold;
+}
+
 .notes-block .one:before {
   background-color: #007243;
   content: 'Y';
 }
+
+.notes-block .two {
+  color: #00387b;
+  font-weight: bold;
+}
+
 .notes-block .two:before {
   background-color: #00387b;
   content: 'X';
 }
+
+.notes-block .three {
+  color: #000;
+  font-weight: bold;
+}
+
 .notes-block .three:before {
   background-color: #F7BA0B;
   color: #000;
   content: 'B';
 }
+
+.notes-block .four {
+  color: #C1121C;
+  font-weight: bold;
+}
+
 .notes-block .four:before {
   background-color: #C1121C;
   content: 'A';
