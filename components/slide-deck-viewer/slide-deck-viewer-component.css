@@ -31,6 +31,9 @@
   opacity: 0;
 }
 
+.slideViewer-wrapper.slideViewer-wrapper--loaded.with-cursor:after {
+  display: none;
+}
 
 .slideViewer-wrapper.slideViewer-wrapper--loaded.slideViewer-wrapper--overTheEnd:after {
   opacity: 1;
