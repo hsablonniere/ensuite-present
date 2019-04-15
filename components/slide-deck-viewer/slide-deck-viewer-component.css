@@ -14,6 +14,7 @@
 
 /* prevents clicks on slide */
 .slideViewer-wrapper:after {
+  cursor: none;
   background-color: #000;
   content: ' ';
   display: block;
@@ -32,7 +33,8 @@
 }
 
 .slideViewer-wrapper.slideViewer-wrapper--loaded.with-cursor:after {
-  display: none;
+  /*display: none;*/
+  cursor: default;
 }
 
 .slideViewer-wrapper.slideViewer-wrapper--loaded.slideViewer-wrapper--overTheEnd:after {

@@ -49,6 +49,8 @@
       wrapperReference.parentElement.insertBefore(newWrapper, before);
     }
 
+    debugger;
+
     wrapperReference.dataset.shift = 0 + shift;
   }
 
@@ -58,7 +60,9 @@
     wrapperReference.classList.add('with-cursor');
     hideCursorTimeoutId = setTimeout(() => {
       wrapperReference.classList.remove('with-cursor');
-    }, 5000);
+      wrapperReference.firstElementChild.blur();
+      window.focus();
+    }, 2000);
   });
 
   const componentsChannel = new BroadcastChannel(`COMPONENTS_CHANNEL(${bus})`);
