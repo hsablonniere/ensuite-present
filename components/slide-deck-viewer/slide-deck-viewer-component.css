@@ -33,7 +33,6 @@
 }
 
 .slideViewer-wrapper.slideViewer-wrapper--loaded.with-cursor:after {
-  /*display: none;*/
   cursor: default;
 }
 
