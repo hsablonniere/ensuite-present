@@ -115,11 +115,12 @@
 }
 
 .notes-block .time {
-  color: #555;
-  display: inline-block;
+  background-color: red;
+  color: #fff;
+  display: block;
   font-size: 1.3em;
+  border-radius: 1rem;
   font-weight: bold;
-  line-height: 1;
   text-align: center;
   width: 100%;
 }
